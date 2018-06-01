@@ -13,6 +13,7 @@ void printIntro();
 void playGame();
 FText getValidGuess();
 bool askToPlayAgain();
+void printGameSummary();
 
 FStarUfoGame SUGame; //create an instance the FStarUfoGame calles SUGame
 
@@ -52,7 +53,7 @@ void playGame(){
         std::cout << "Stars = " << starUFOCount.stars;
         std::cout << " UFO's = " << starUFOCount.UFOs << "\n\n";
     }
-    //TODO summarise game
+    printGameSummary();
     return;
 }
 
@@ -89,9 +90,18 @@ FText getValidGuess(){
 
 //PURPOSE: Ask the user if they want to play again
 bool askToPlayAgain(){
-    std::cout <<"\nDo you want to play again? (y to play again, any other key to exit) ";
+    std::cout <<"\nDo you want to play again with the same word? (y to play again, any other key to exit) ";
     FText Response = "";
     getline(std::cin, Response);
 
     return (Response[0] == 'y' || Response[0] == 'Y');
+}
+
+//PURPOSE: Tell the user if they won or lost
+void printGameSummary(){
+    if(SUGame.isGameWon()){
+        std::cout << "Winner winner chicken dinner!\n";
+    } else {
+        std::cout << "Sorry, try again!\n";
+    }
 }

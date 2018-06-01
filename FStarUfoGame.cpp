@@ -28,9 +28,9 @@ void FStarUfoGame::reset(){  //TODO make a more rich return value
 EGuessStatus FStarUfoGame::checkGuessValidity(fString Guess) const{
 
     if(false){ //IF THE GUESS isnt an isogram
-        return EGuessStatus::Not_Isogram;   //return an error
-    } else if (false){  //if the guess isnt all lowercase
-        return EGuessStatus::Not_Lowercase; //return error  
+        return EGuessStatus::Not_Isogram;   //return an error TODO write function 
+    } else if (false){  //if the guess isnt all lowercase 
+        return EGuessStatus::Not_Lowercase; //return error TODO write function 
     } else if(Guess.length() != getRandomWordLength()){    //if the guess length is wrong
         return EGuessStatus::Wrong_Length; //return error
     } else {//otherwise
