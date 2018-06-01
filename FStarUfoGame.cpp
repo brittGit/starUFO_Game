@@ -12,6 +12,7 @@ FStarUfoGame::FStarUfoGame(){reset();}
 int32 FStarUfoGame::getMaxTries() const {return myMaxTries;}
 int32 FStarUfoGame::getCurrentTry() const {return myCurrentTry;}
 int32 FStarUfoGame::getRandomWordLength() const {return RandomWord.length();}
+bool FStarUfoGame::isGameWon() const {return bGameIsWon;}
 
 void FStarUfoGame::reset(){  //TODO make a more rich return value
     const int32 MAX_TRIES = 8;
@@ -20,11 +21,8 @@ void FStarUfoGame::reset(){  //TODO make a more rich return value
     myMaxTries = MAX_TRIES;
     RandomWord = RANDOM_WORD;
     myCurrentTry = 1;
+    bGameIsWon = false;
     return;
-}
-
-bool FStarUfoGame::isGameWon() const {
-    return false;
 }
 
 EGuessStatus FStarUfoGame::checkGuessValidity(fString Guess) const{
@@ -62,6 +60,11 @@ FStarUfoCount FStarUfoGame::submitValidGuess(fString Guess){
                 }   
             }
         }
+    }
+    if(starUFOCount.stars == WordLength) {
+        bGameIsWon = true;
+    } else {
+        bGameIsWon = false;
     }
     return starUFOCount;
 }

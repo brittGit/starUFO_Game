@@ -43,7 +43,7 @@ void playGame(){
 
     //loop asking for guesses while game is not won
     //and there are still tries remaining
-    while(!SUGame.isGameWon() == false && SUGame.getCurrentTry() <= maxTries){
+    while(!SUGame.isGameWon() && SUGame.getCurrentTry() <= maxTries){
         FText Guess = getValidGuess(); 
 
         //submit valid guess to the game and receive counts
@@ -77,9 +77,6 @@ FText getValidGuess(){
             break;
         case EGuessStatus::Not_Lowercase:
             std::cout << "Please enter word in lowercase.\n";
-            break;
-        case EGuessStatus::OK: 
-            std::cout << "OK.\n";
             break;
         default:
             //assume the guess is valid

@@ -36,4 +36,5 @@ class FStarUfoGame {
         int32 myCurrentTry;
         int32 myMaxTries;
         fString RandomWord;
+        bool bGameIsWon;
 };
