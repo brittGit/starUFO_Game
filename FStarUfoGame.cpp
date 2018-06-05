@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 #include "FStarUfoGame.h"
+#include <map>
+#define TMap std::map
 
 using fString = std::string;
 using int32 = int;
@@ -27,9 +29,9 @@ void FStarUfoGame::reset(){  //TODO make a more rich return value
 
 EGuessStatus FStarUfoGame::checkGuessValidity(fString Guess) const{
 
-    if(false){ //IF THE GUESS isnt an isogram
-        return EGuessStatus::Not_Isogram;   //return an error TODO write function 
-    } else if (false){  //if the guess isnt all lowercase 
+    if(!isIsogram(Guess)){ //IF THE GUESS isnt an isogram
+        return EGuessStatus::Not_Isogram;   //return an error 
+    } else if (!isLowercase(Guess)){  //if the guess isnt all lowercase 
         return EGuessStatus::Not_Lowercase; //return error TODO write function 
     } else if(Guess.length() != getRandomWordLength()){    //if the guess length is wrong
         return EGuessStatus::Wrong_Length; //return error
@@ -67,4 +69,32 @@ FStarUfoCount FStarUfoGame::submitValidGuess(fString Guess){
         bGameIsWon = false;
     }
     return starUFOCount;
+}
+
+bool FStarUfoGame::isIsogram(fString Word) const {
+
+    //treat 0 or 1 letter words as isograms
+    if(Word.length() <= 1) { return true; } 
+
+    TMap<char, bool> LetterSeen; //set up TMap
+    for (auto Letter : Word){    //for all letters of the word
+
+        Letter = tolower(Letter);   //to store and remember only lower case letters
+        if(LetterSeen[Letter]) {//if the letter is in the map twice 
+            return false;   //no isogram at this stage
+            } else { //start adding letters to map
+                LetterSeen[Letter] = true; //add the letter to the map as seen
+            }
+    }
+    return true; //for example in cases where /0 is entered
+}
+
+bool FStarUfoGame::isLowercase(fString Word) const {
+
+    for(auto Letter : Word){ //for all letters of the word
+        if(!islower(Letter))//if not a lowercase letter
+            return false;
+        
+        }
+    return true;
 }

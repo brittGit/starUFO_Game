@@ -37,4 +37,7 @@ class FStarUfoGame {
         int32 myMaxTries;
         fString RandomWord;
         bool bGameIsWon;
+
+        bool isIsogram(fString) const;
+        bool isLowercase(fString) const;
 };
