@@ -1,10 +1,14 @@
+/*THE GAME LOGIC (no view code or direct user interaction) 
+The game is a simple word game based on Mastermind*/
+//#pragma once
 #include <string>
 #include <iostream>
 using namespace std;
+
+//to make the syntax unreal friendly
 using fString = std::string;
 using int32 = int;
 
-//all values initialized to 0
 struct FStarUfoCount {
     int32 stars = 0;
     int32 UFOs = 0;
@@ -25,16 +29,15 @@ class FStarUfoGame {
         int32 getCurrentTry() const;
         int32 getRandomWordLength() const;
         bool isGameWon() const;
-        EGuessStatus checkGuessValidity(fString) const; //TODO make a more rich return value
+        EGuessStatus checkGuessValidity(fString) const; 
 
-        void reset();  //TODO make a more rich return value
+        void reset();  
         FStarUfoCount submitValidGuess(fString);//counts stars and UFO's and increases try number, assuming valid guess
 
 //Please  try ignore this and focus on the interface above ^^
     private:
         //see constructor for initialization
         int32 myCurrentTry;
-        int32 myMaxTries;
         fString RandomWord;
         bool bGameIsWon;
 

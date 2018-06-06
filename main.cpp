@@ -2,20 +2,23 @@
 This acts as the view in a MVC pattern, and is responsible for all user interaction. For game logic see the
 FStarUfoGame class.
 */
+//#pragma once 
 #include <iostream>
 #include <string>
 #include "FStarUfoGame.h"
 
+//to make syntax unreal friendly
 using FText = std::string;
 using int32 = int;
 
+//prototypes
 void printIntro();
 void playGame();
 FText getValidGuess();
 bool askToPlayAgain();
 void printGameSummary();
 
-FStarUfoGame SUGame; //create an instance the FStarUfoGame calles SUGame
+FStarUfoGame SUGame; //create an instance the FStarUfoGame calles SUGame, reused across plays
 
 //The entry point for our application
 int main(){
@@ -29,15 +32,24 @@ int main(){
     return 0; //exit the applicatoin
 }
 
-//PURPOSE: introduce the game
 void printIntro(){
     
-    std::cout << "Welcome to Stars and UFO's\n";
+    std::cout << "                Welcome to Stars and UFO's\n";
+    std::cout << "  *  .     ,  *  o     .    '    .    *        o      ."       << std::endl;
+    std::cout << "     *     ,               .     |        .       *"           << std::endl;
+    std::cout << " o     \\  :  /       *       .-,^,-.   .    '        "        << std::endl;
+    std::cout << "    `. __/ \\__ .'   .       /_....._\\    .   *       o"      << std::endl;
+    std::cout << " *  _ _\\     /_ _       .-,,`       `,,-.         .       ."  << std::endl;
+    std::cout << "  .    /_   _\\     .   (  ooo  ooo  ooo  )   . o   "          << std::endl;
+    std::cout << "     .'  \\ /  `.     *  '-.,_________,.-'              ."     << std::endl;
+    std::cout << "  o    /  :  \\   *   .      /   *   \\     *       .    o  "   << std::endl;
+    std::cout << "  .       '               _/     o   \\_       .        ."     << std::endl;
+    std::cout << "     *    '  .    o      `,,`  .      `,,`  .   o         "     << std::endl;
     std::cout << "Can you guess the " << SUGame.getRandomWordLength() << " letter isogram I'm thinking of?\n";
     return;
 }
 
-//PURPOSE: go through steps to play a game of starsUFOsut 
+//PURPOSE: plays a single game with one random word
 void playGame(){
     SUGame.reset(); 
     int32 maxTries = SUGame.getMaxTries();
@@ -51,7 +63,7 @@ void playGame(){
         FStarUfoCount starUFOCount = SUGame.submitValidGuess(Guess);
 
         std::cout << "Stars = " << starUFOCount.stars;
-        std::cout << " UFO's = " << starUFOCount.UFOs << "\n\n";
+        std::cout << " UFO's = " << starUFOCount.UFOs << "\n";
     }
     printGameSummary();
     return;
@@ -65,25 +77,25 @@ FText getValidGuess(){
     do {
         //get a guess from the player
         int32 currentTry = SUGame.getCurrentTry();
-        std::cout << "\nTry " << currentTry << ". Enter your guess: ";
+        std::cout << "\nTry " << currentTry << " of " << SUGame.getMaxTries() << ". Enter your guess: ";
         getline(std::cin , Guess);
 
+        //check status and give feedback
         Status = SUGame.checkGuessValidity(Guess);
         switch(Status){
         case EGuessStatus::Wrong_Length:
-            std::cout << "Please enter a " << SUGame.getRandomWordLength() << " letter word.\n";
+            std::cout << "Please enter a " << SUGame.getRandomWordLength() << " letter word.\n\n";
             break;
         case EGuessStatus::Not_Isogram:
-            std::cout << "Please enter a word without repeating letters.\n";
+            std::cout << "Please enter a word without repeating letters.\n\n";
             break;
         case EGuessStatus::Not_Lowercase:
-            std::cout << "Please enter word in lowercase.\n";
+            std::cout << "Please enter word in lowercase.\n\n";
             break;
         default:
             //assume the guess is valid
             break;
         }
-        std::cout << std::endl;
     } while(Status != EGuessStatus::OK); //keep looping until we get no errors
     return Guess;
 }

@@ -2,25 +2,28 @@
 #include <string>
 #include "FStarUfoGame.h"
 #include <map>
-#define TMap std::map
 
-using fString = std::string;
+//to make syntax unreal friendly
+#define TMap std::map
 using int32 = int;
 
 //CONSTRUCTOR
 FStarUfoGame::FStarUfoGame(){reset();}
 
 //getters
-int32 FStarUfoGame::getMaxTries() const {return myMaxTries;}
 int32 FStarUfoGame::getCurrentTry() const {return myCurrentTry;}
 int32 FStarUfoGame::getRandomWordLength() const {return RandomWord.length();}
 bool FStarUfoGame::isGameWon() const {return bGameIsWon;}
 
-void FStarUfoGame::reset(){  //TODO make a more rich return value
-    const int32 MAX_TRIES = 8;
-     const fString RANDOM_WORD = "planet";
+int32 FStarUfoGame::getMaxTries() const {
+    TMap<int32, int32> WordLengthToMaxTries{ {3,4}, {4,7}, {5,10}, {6,15}, {7, 20} };
+    return WordLengthToMaxTries[RandomWord.length()];
+}
 
-    myMaxTries = MAX_TRIES;
+void FStarUfoGame::reset(){ 
+    const int32 MAX_TRIES = {3};
+    const fString RANDOM_WORD = "planet";   //this must be an isogram
+
     RandomWord = RANDOM_WORD;
     myCurrentTry = 1;
     bGameIsWon = false;
@@ -32,7 +35,7 @@ EGuessStatus FStarUfoGame::checkGuessValidity(fString Guess) const{
     if(!isIsogram(Guess)){ //IF THE GUESS isnt an isogram
         return EGuessStatus::Not_Isogram;   //return an error 
     } else if (!isLowercase(Guess)){  //if the guess isnt all lowercase 
-        return EGuessStatus::Not_Lowercase; //return error TODO write function 
+        return EGuessStatus::Not_Lowercase; //return error 
     } else if(Guess.length() != getRandomWordLength()){    //if the guess length is wrong
         return EGuessStatus::Wrong_Length; //return error
     } else {//otherwise
